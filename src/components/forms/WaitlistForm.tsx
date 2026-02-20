@@ -59,7 +59,7 @@ export default function WaitlistForm() {
   if (submitted) {
     return (
       <div className="text-center py-12 px-6 bg-gradient-to-br from-emerald-900/20 to-slate-900/20 border border-emerald-700/50 rounded-2xl">
-        <div className="text-5xl mb-4">✓</div>
+        <div className="text-5xl mb-4 text-emerald-400">✓</div>
         <h3 className="text-2xl font-bold text-white mb-2">You're on the list!</h3>
         <p className="text-slate-300">
           We'll send you launch updates—no spam, just poetry.
