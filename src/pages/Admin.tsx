@@ -199,7 +199,7 @@ export default function Admin() {
             </form>
 
             <p className="text-slate-500 text-xs text-center mt-6">
-              Default password: <code className="bg-slate-800 px-2 py-1 rounded">wordstack2026</code>
+              Password must be configured in environment variables
             </p>
           </div>
         </div>
