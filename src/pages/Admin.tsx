@@ -167,6 +167,30 @@ export default function Admin() {
     ).length;
   };
 
+  const getInterestStats = () => {
+    const interests = {
+      earning: { label: 'Earning from poetry', count: 0, color: 'emerald' },
+      followers: { label: 'Growing followers', count: 0, color: 'blue' },
+      critique: { label: 'Critique & WordGuides', count: 0, color: 'purple' },
+      own_page: { label: 'Owning my own page', count: 0, color: 'pink' },
+      community: { label: 'Groups & community', count: 0, color: 'amber' },
+    };
+
+    signups.forEach((signup) => {
+      if (signup.interest && interests[signup.interest as keyof typeof interests]) {
+        interests[signup.interest as keyof typeof interests].count++;
+      }
+    });
+
+    const total = Object.values(interests).reduce((sum, int) => sum + int.count, 0);
+    
+    return Object.entries(interests).map(([key, value]) => ({
+      key,
+      ...value,
+      percentage: total > 0 ? Math.round((value.count / total) * 100) : 0,
+    }));
+  };
+
   // Password Protection Screen
   if (!isAuthenticated) {
     return (
@@ -281,6 +305,64 @@ export default function Admin() {
             </div>
             <h3 className="text-slate-300 text-sm font-medium">This Week</h3>
           </div>
+        </div>
+
+        {/* Interest Analytics */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-white mb-6">What Poets Are Excited About</h2>
+          
+          {signups.filter(s => s.interest).length === 0 ? (
+            <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700 rounded-xl p-12 text-center">
+              <p className="text-slate-400">No interest data yet—waiting for signups to select their interests</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+              {getInterestStats().map((interest) => {
+                const colorClasses = {
+                  emerald: 'from-emerald-900/30 to-emerald-950/20 border-emerald-700/50',
+                  blue: 'from-blue-900/30 to-blue-950/20 border-blue-700/50',
+                  purple: 'from-purple-900/30 to-purple-950/20 border-purple-700/50',
+                  pink: 'from-pink-900/30 to-pink-950/20 border-pink-700/50',
+                  amber: 'from-amber-900/30 to-amber-950/20 border-amber-700/50',
+                };
+
+                const textClasses = {
+                  emerald: 'text-emerald-400',
+                  blue: 'text-blue-400',
+                  purple: 'text-purple-400',
+                  pink: 'text-pink-400',
+                  amber: 'text-amber-400',
+                };
+
+                return (
+                  <div
+                    key={interest.key}
+                    className={`bg-gradient-to-br ${colorClasses[interest.color as keyof typeof colorClasses]} border rounded-xl p-5`}
+                  >
+                    <div className="flex items-baseline justify-between mb-3">
+                      <span className={`text-4xl font-bold ${textClasses[interest.color as keyof typeof textClasses]}`}>
+                        {interest.percentage}%
+                      </span>
+                      <span className="text-slate-400 text-sm font-medium">
+                        {interest.count} {interest.count === 1 ? 'poet' : 'poets'}
+                      </span>
+                    </div>
+                    <p className="text-slate-300 text-sm font-medium leading-snug">
+                      {interest.label}
+                    </p>
+                    
+                    {/* Progress bar */}
+                    <div className="mt-3 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full bg-gradient-to-r ${textClasses[interest.color as keyof typeof textClasses].replace('text-', 'from-')} ${textClasses[interest.color as keyof typeof textClasses].replace('text-', 'to-').replace('400', '500')} transition-all duration-500`}
+                        style={{ width: `${interest.percentage}%` }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* Chart */}
