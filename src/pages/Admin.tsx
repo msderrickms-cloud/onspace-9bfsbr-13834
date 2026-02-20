@@ -16,11 +16,14 @@ interface DailySignup {
 }
 
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD;
-
-if (!ADMIN_PASSWORD) {
-  console.error('VITE_ADMIN_PASSWORD is not set in environment variables');
-}
 const AUTH_KEY = 'wordstack_admin_auth';
+
+// Debug logging
+console.log('Environment check:', {
+  passwordSet: !!ADMIN_PASSWORD,
+  passwordLength: ADMIN_PASSWORD?.length || 0,
+  passwordPreview: ADMIN_PASSWORD ? `${ADMIN_PASSWORD.substring(0, 3)}...` : 'NOT SET'
+});
 
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -49,15 +52,26 @@ export default function Admin() {
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    console.log('Login attempt:', {
+      inputLength: passwordInput.length,
+      expectedLength: ADMIN_PASSWORD?.length || 0,
+      match: passwordInput === ADMIN_PASSWORD
+    });
+    
+    if (!ADMIN_PASSWORD) {
+      setPasswordError('Admin password not configured. Please set VITE_ADMIN_PASSWORD in .env file and restart the server.');
+      return;
+    }
+    
     if (passwordInput === ADMIN_PASSWORD) {
       setIsAuthenticated(true);
       sessionStorage.setItem(AUTH_KEY, 'true');
       setPasswordError('');
-      console.log('Admin authenticated successfully');
+      console.log('✅ Admin authenticated successfully');
     } else {
       setPasswordError('Incorrect password. Please try again.');
       setPasswordInput('');
-      console.log('Authentication failed');
+      console.log('❌ Authentication failed - password mismatch');
     }
   };
 
@@ -198,8 +212,15 @@ export default function Admin() {
               </Button>
             </form>
 
-            <p className="text-slate-500 text-xs text-center mt-6">
-              Password must be configured in environment variables
+            {!ADMIN_PASSWORD && (
+              <div className="mt-6 p-3 bg-red-900/20 border border-red-700 rounded-lg">
+                <p className="text-red-400 text-xs text-center">
+                  ⚠️ VITE_ADMIN_PASSWORD not set. Add it to .env and restart server.
+                </p>
+              </div>
+            )}
+            <p className="text-slate-500 text-xs text-center mt-4">
+              Check browser console for debug information
             </p>
           </div>
         </div>
