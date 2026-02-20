@@ -3,5 +3,6 @@ export interface WaitlistEntry {
   name: string;
   email: string;
   poet_handle?: string;
+  interest?: string;
   created_at?: string;
 }

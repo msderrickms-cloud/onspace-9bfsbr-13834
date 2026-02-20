@@ -127,11 +127,12 @@ export default function Admin() {
   };
 
   const exportToCSV = () => {
-    const headers = ['Name', 'Email', 'Poet Handle', 'Signup Date'];
+    const headers = ['Name', 'Email', 'Poet Handle', 'Interest', 'Signup Date'];
     const rows = signups.map((signup) => [
       signup.name,
       signup.email,
       signup.poet_handle || 'N/A',
+      signup.interest || 'N/A',
       new Date(signup.created_at).toLocaleString(),
     ]);
 
@@ -327,13 +328,14 @@ export default function Admin() {
                   <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">Name</th>
                   <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">Email</th>
                   <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">Poet Handle</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">Interest</th>
                   <th className="px-6 py-4 text-left text-sm font-semibold text-slate-300">Signup Date</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-700">
                 {signups.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="px-6 py-12 text-center text-slate-400">
+                    <td colSpan={5} className="px-6 py-12 text-center text-slate-400">
                       No signups yet
                     </td>
                   </tr>
@@ -344,6 +346,19 @@ export default function Admin() {
                       <td className="px-6 py-4 text-slate-300">{signup.email}</td>
                       <td className="px-6 py-4 text-slate-400">
                         {signup.poet_handle || '—'}
+                      </td>
+                      <td className="px-6 py-4 text-slate-400">
+                        {signup.interest ? (
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-900/30 text-emerald-300 border border-emerald-700/50">
+                            {signup.interest === 'earning' && 'Earning'}
+                            {signup.interest === 'followers' && 'Followers'}
+                            {signup.interest === 'critique' && 'Critique'}
+                            {signup.interest === 'own_page' && 'Own Page'}
+                            {signup.interest === 'community' && 'Community'}
+                          </span>
+                        ) : (
+                          '—'
+                        )}
                       </td>
                       <td className="px-6 py-4 text-slate-400">
                         {new Date(signup.created_at).toLocaleDateString('en-US', {

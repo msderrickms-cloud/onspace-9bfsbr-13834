@@ -11,6 +11,7 @@ export default function WaitlistForm() {
     name: '',
     email: '',
     poet_handle: '',
+    interest: '',
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -29,6 +30,7 @@ export default function WaitlistForm() {
           name: formData.name,
           email: formData.email,
           poet_handle: formData.poet_handle || null,
+          interest: formData.interest || null,
         },
       ]);
 
@@ -110,6 +112,38 @@ export default function WaitlistForm() {
           className="mt-1.5 bg-slate-800/50 border-slate-700 text-white placeholder:text-slate-500"
           placeholder="@yourpoetname"
         />
+      </div>
+
+      <div className="pt-4 border-t border-slate-700/50">
+        <Label className="text-slate-200 mb-3 block">
+          What are you most excited about? <span className="text-slate-500">(Optional)</span>
+        </Label>
+        <div className="space-y-2.5">
+          {[
+            { value: 'earning', label: 'Earning from poetry' },
+            { value: 'followers', label: 'Growing followers' },
+            { value: 'critique', label: 'Critique & WordGuides' },
+            { value: 'own_page', label: 'Owning my own page' },
+            { value: 'community', label: 'Groups & community' },
+          ].map((option) => (
+            <label
+              key={option.value}
+              className="flex items-center gap-3 cursor-pointer group"
+            >
+              <input
+                type="radio"
+                name="interest"
+                value={option.value}
+                checked={formData.interest === option.value}
+                onChange={(e) => setFormData({ ...formData, interest: e.target.value })}
+                className="w-4 h-4 text-emerald-600 bg-slate-800 border-slate-600 focus:ring-emerald-500 focus:ring-2"
+              />
+              <span className="text-slate-300 group-hover:text-white transition-colors">
+                {option.label}
+              </span>
+            </label>
+          ))}
+        </div>
       </div>
 
       <Button
