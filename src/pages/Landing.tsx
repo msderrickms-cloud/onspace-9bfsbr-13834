@@ -87,7 +87,9 @@ export default function Landing() {
 
           <div className="grid md:grid-cols-2 gap-8 mb-16">
             <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700 rounded-xl p-8">
-              <div className="text-4xl mb-4">🏠</div>
+              <div className="w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center mb-4">
+                <span className="text-2xl font-bold text-white">1</span>
+              </div>
               <h3 className="text-2xl font-bold text-white mb-3">Ownership & Control</h3>
               <p className="text-slate-300">
                 Your poet page, your rules. Create groups, invite members, or join communities you love.
@@ -95,7 +97,9 @@ export default function Landing() {
             </div>
 
             <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700 rounded-xl p-8">
-              <div className="text-4xl mb-4">📝</div>
+              <div className="w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center mb-4">
+                <span className="text-2xl font-bold text-white">2</span>
+              </div>
               <h3 className="text-2xl font-bold text-white mb-3">WordGuides & Critique</h3>
               <p className="text-slate-300">
                 Experienced reviewers help you improve your craft before your poems go live. Rate their feedback and shape the platform.
@@ -103,7 +107,9 @@ export default function Landing() {
             </div>
 
             <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700 rounded-xl p-8">
-              <div className="text-4xl mb-4">💰</div>
+              <div className="w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center mb-4">
+                <span className="text-2xl font-bold text-white">3</span>
+              </div>
               <h3 className="text-2xl font-bold text-white mb-3">Earn Ink & Money</h3>
               <p className="text-slate-300">
                 Readers give you Ink for your poems. 1 clap = 1 Ink = $0.01. Boost poems, unlock features, or convert Ink to USD.
@@ -111,7 +117,9 @@ export default function Landing() {
             </div>
 
             <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700 rounded-xl p-8">
-              <div className="text-4xl mb-4">🎁</div>
+              <div className="w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center mb-4">
+                <span className="text-2xl font-bold text-white">4</span>
+              </div>
               <h3 className="text-2xl font-bold text-white mb-3">Daily Rewards & Contests</h3>
               <p className="text-slate-300">
                 5 free Ink per day (up to 25 per month), contests, and Top Poem selections to maximize your earnings.
@@ -119,7 +127,9 @@ export default function Landing() {
             </div>
 
             <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700 rounded-xl p-8 md:col-span-2">
-              <div className="text-4xl mb-4">⭐</div>
+              <div className="w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center mb-4">
+                <span className="text-2xl font-bold text-white">5</span>
+              </div>
               <h3 className="text-2xl font-bold text-white mb-3">Recognition & Followers</h3>
               <p className="text-slate-300">
                 Build your audience, be celebrated, and connect with poets worldwide.
