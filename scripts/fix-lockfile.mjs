@@ -1,9 +1,33 @@
 import { execSync } from 'child_process';
+import { existsSync, unlinkSync } from 'fs';
 
+const cwd = '/vercel/share/v0-project';
+
+// Remove any pnpm lock file that shouldn't be here
+const pnpmLock = `${cwd}/pnpm-lock.yaml`;
+if (existsSync(pnpmLock)) {
+  console.log('Removing pnpm-lock.yaml...');
+  unlinkSync(pnpmLock);
+}
+
+// Remove bun lock file if present
+const bunLock = `${cwd}/bun.lock`;
+if (existsSync(bunLock)) {
+  console.log('Removing bun.lock...');
+  unlinkSync(bunLock);
+}
+
+// Remove stale package-lock.json and node_modules
 console.log('Removing node_modules and package-lock.json...');
-try { execSync('rm -rf node_modules package-lock.json', { cwd: '/vercel/share/v0-project', stdio: 'inherit' }); } catch(e) {}
+try { execSync('rm -rf node_modules package-lock.json', { cwd, stdio: 'inherit' }); } catch(e) {}
 
-console.log('Running npm install to regenerate lock file...');
-execSync('npm install --legacy-peer-deps', { cwd: '/vercel/share/v0-project', stdio: 'inherit' });
+console.log('Running npm install to generate a fresh package-lock.json...');
+execSync('npm install --legacy-peer-deps', { cwd, stdio: 'inherit', timeout: 120000 });
 
-console.log('Done! Lock file regenerated.');
+console.log('Verifying package-lock.json exists...');
+if (existsSync(`${cwd}/package-lock.json`)) {
+  console.log('SUCCESS: package-lock.json has been regenerated.');
+} else {
+  console.error('ERROR: package-lock.json was not created!');
+  process.exit(1);
+}
