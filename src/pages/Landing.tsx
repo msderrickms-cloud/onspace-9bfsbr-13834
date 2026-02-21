@@ -187,6 +187,7 @@ export default function Landing() {
             WordStack
           </h3>
           <p className="text-slate-400 text-sm">Unlike Others</p>
+          <p className="text-slate-500 text-xs mt-4">&copy; {new Date().getFullYear()} WordStack. All rights reserved.</p>
         </div>
       </footer>
     </div>
